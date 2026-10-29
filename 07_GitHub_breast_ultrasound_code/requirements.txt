@@ -1,0 +1,11 @@
+numpy
+pandas
+scipy
+scikit-learn==1.6.1
+scikit-image
+Pillow
+matplotlib
+joblib
+threadpoolctl
+ipython
+openpyxl
