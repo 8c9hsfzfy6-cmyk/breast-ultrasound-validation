@@ -1,6 +1,6 @@
 # Regional breast ultrasound validation
 
-Companion code for “Regional breast ultrasound features across three datasets: semantic alignment, diagnostic increment and contour sensitivity”. Authors: Yusong Wu, Jing Zhang, Shan Ma. Correspondence: mashan@lzu.edu.cn.
+Companion code for “Posterior brightness in breast ultrasound: measurement availability, diagnostic increment and contour sensitivity across three datasets”. Authors: Yusong Wu and Jing Zhang. Corresponding author: Yusong Wu (yusongwu123@foxmail.com).
 
 ## Public datasets
 
@@ -39,3 +39,24 @@ This is retrospective exploratory research using supplied masks. BrEaST descript
 ## Provenance and license
 
 Python code is copied from saved executed analysis sources; source hashes are in `SOURCE_SHA256.txt`. Notebooks are copies with output and metadata removal. AI tools assisted code development and manuscript preparation. Authors are responsible for review. No license for original study code has yet been selected; public hosting alone does not grant an open-source license. Third-party packages and datasets retain their own licenses.
+
+
+## Measurable-case paired analysis (2026-11-01 release)
+
+`run_complete_cases.py` is the archived analysis used for the added measurable-case comparisons in the JMU manuscript. It uses frozen predictions and performs no model training. Place the matching `evidence/` directory next to this script, using these required layouts:
+
+- `evidence/bus_v6_features_*/features.csv` and `cohort.csv`
+- `evidence/bus_v6_external_training_*/external_predictions.csv`
+- `evidence/bus_uclm_external_*/predictions_with_labels.csv`, `features.csv`, and `descriptive_subgroups.csv`
+
+These are derived inputs from the archived feature/prediction pipeline; raw image downloads alone are insufficient. This release does not include row-level inputs or raw images. Generate the matching inputs from the archived pipeline, or use the matching retained analysis archive. Avoid mixing results from different model versions. The script deliberately retains its original input layout and writes to `new_results/` beside itself.
+
+Run from this directory after installing the requirements:
+
+```bash
+OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 python run_complete_cases.py
+```
+
+The script asserts 170 measurable BrEaST cases and 142 BUS-UCLM images, preserves paired comparisons and uses 2,000 bootstrap replicates (seed 20261031). BrEaST uses diagnosis-stratified case resampling; BUS-UCLM uses patient-cluster resampling with image-equal and patient-equal weighting. Confidence intervals are conditional on frozen fitted models. `results/complete_cases/` contains archived aggregate metrics, paired increments, protocol and verification records from the completed analysis, not a claim of a new rerun for this packaging update. Identifiers and individual predictions are excluded from this public package.
+
+The 2026-11-01 packaging check verified the copied script against the retained analysis archive and compiled the Python syntax. It did not rerun training or the bootstrap analysis. `RELEASE_SHA256.txt` records the current release bytes; the older `SOURCE_SHA256.txt` is the historical source-provenance manifest.

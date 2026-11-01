@@ -1,0 +1,14 @@
+{
+  "bootstrap": 2000,
+  "seed": 20261031,
+  "analysis": "exploratory frozen-model measurable-case diagnostic comparison",
+  "primary_contrast": "base_posterior - base_missing",
+  "secondary_contrasts": [
+    "base_missing - base",
+    "base_posterior - base"
+  ],
+  "BrEaST": "diagnosis-stratified case bootstrap",
+  "BUS-UCLM": "patient-cluster bootstrap; equal cluster weight normalized within measurable subset",
+  "interval": "percentile 95%; conditional on fitted models",
+  "training": false
+}
